@@ -1,4 +1,18 @@
 const express=require('express');
 const app=express();
-const server=require('http').Server(app);
-c
+const server=require('http').Server(app);//create a server based on express server and then passes it to socket.io
+const io=require('socket.io')(server);
+
+app.set('view engine','ejs');
+app.use(express.static('public'));
+
+
+app.get('/',(req,res) => {
+
+});
+
+app.get('/:room', (req, res) => {
+    res.render('room', { roomId: req.params.room })
+});
+
+server.listen(3002);
