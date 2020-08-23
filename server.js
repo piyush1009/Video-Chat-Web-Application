@@ -1,3 +1,4 @@
+var PORT=process.env.PORT ||3002;
 const express=require('express');
 const app=express();
 const server=require('http').Server(app);//create a server based on express server and then passes it to socket.io
@@ -27,4 +28,4 @@ io.on('connection', socket => {    //if anyone connects to our webpage and socke
         });
     });
 });
-server.listen(3002);
+server.listen(PORT);

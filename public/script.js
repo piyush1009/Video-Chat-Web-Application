@@ -1,8 +1,9 @@
+var PORT=process.env.PORT ||3002;
 const socket=io('/'); //reference to socket and connecting a path
 const videoGrid=document.getElementById('video-grid');     //get reference to that grid
 const myPeer = new Peer(undefined, { //undefined because we are let the server take care of generating our own id.
     host: '/',
-    port: '3003'
+    port: 'process.env.PORT+1'
 });
 const myVideo = document.createElement('video');  //create video element
 myVideo.muted = true;  //we mute ourselves
