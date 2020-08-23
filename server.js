@@ -16,4 +16,11 @@ app.get('/:room', (req, res) => {   //room is dynamic parameter
     res.render('room', { roomId: req.params.room })
 });
 
+io.on('connection', socket => {    //if anyone connects to our webpage and socket for actuslly socket user is connected through
+    //setting events to listen to
+    socket.on('join-room',(roomId,userId) => {
+        socket.join(roomId); //to join room
+        socket.to(roomId).broadcast.emit('user-connected', userId)    //to send all users saying user connected
+    });
+});
 server.listen(3002);
