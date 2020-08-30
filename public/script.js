@@ -1,10 +1,8 @@
-var PORT=process.env.PORT ||3002;
 const socket=io('/'); //reference to socket and connecting a path
 const videoGrid=document.getElementById('video-grid');     //get reference to that grid
 const myPeer = new Peer(undefined, { //undefined because we are let the server take care of generating our own id.
-    host: 'video-chatting-app.herokuapp.com',
-    secure: true,
-    port: '443'
+    host: '/',
+    port: '3003'
 });
 const myVideo = document.createElement('video');  //create video element
 myVideo.muted = true;  //we mute ourselves
@@ -12,16 +10,16 @@ myVideo.muted = true;  //we mute ourselves
 const peers={};  //for storing each individual call
 
 //Try connect to our video
-navigator.mediaDevices.getUserMedia({
+navigator.mediaDevices.getUserMedia({   //ask browser for user permission to get video stream 
     video: true,
     audio: true
 }).then(stream => {    //stream is going to be video and audio
-    addVideoStream(myVideo,stream);
+    addVideoStream(myVideo,stream);  //add my video atleast first
 
     myPeer.on('call',call => {  //for listening when someone calls
         call.answer(stream);   //for me
         const video = document.createElement('video');
-        call.on('stream', userVideoStream => {   //for other
+        call.on('stream', userVideoStream => {   //for other   //when we get stream from other user
             addVideoStream(video, userVideoStream);
         });
     });
@@ -55,7 +53,7 @@ function connectToNewUser(userId, stream) {
   }
   
 
-//function for myvideo to use stream
+//function for myvideo to use stream  //to add videos
 function addVideoStream(video, stream) {
     video.srcObject = stream;
     video.addEventListener('loadedmetadata', () => {
